@@ -1,0 +1,22 @@
+{
+  "name": "201602blog",
+  "description": "",
+  "main": "",
+  "authors": [
+    "zhangfengnodejs <83687401@qq.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/zhufengnodejs/201602blog",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "./public/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.6"
+  }
+}

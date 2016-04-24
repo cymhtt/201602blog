@@ -17,6 +17,7 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 //得到app
 var app = express();
+app.set('env',process.env.ENV);
 
 // 设置模板的存放路径
 app.set('views', path.join(__dirname, 'views'));
@@ -36,6 +37,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 // req.cookies res.cookie(key,value)
 app.use(cookieParser());
+
 //静态文件服务中间件 指定一个绝对目录 的路径作为静态文件的根目录
 // /a/b.js
 app.use(express.static(path.join(__dirname, 'public')));
@@ -43,20 +45,25 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/users', users);
 
-// catch 404 and forward to error handler
+//捕获404错误并转发到错误处理中间件
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
 
-// error handlers
+// 错误处理
 
-// development error handler
-// will print stacktrace
+//开发时的错误处理
+//将打印出错误的堆栈信息
+//console.error(app.get('env'));
 if (app.get('env') === 'development') {
+//错误处理中间件有四个参数，第一个参数是错误对象
+//如果有中间件出错了，会把请求转交给错误处理中间件来处理
   app.use(function(err, req, res, next) {
+    //设置状态码 默认500
     res.status(err.status || 500);
+    //渲染模板
     res.render('error', {
       message: err.message,
       error: err
@@ -64,13 +71,13 @@ if (app.get('env') === 'development') {
   });
 }
 
-// production error handler
-// no stacktraces leaked to user
+//生产环境下的错误处理 product
+//不向用户暴露堆栈信息
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error', {
     message: err.message,
-    error: {}
+    error: {}///隐藏错误对象
   });
 });
 

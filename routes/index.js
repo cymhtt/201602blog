@@ -7,7 +7,7 @@ var router = express.Router();
  * listener 指定回调监听函数
  */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: '首页' });
+  res.render('index', { title: '首页'});
 });
 
 module.exports = router;
